@@ -1,7 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+// import blueprint of schema and model
+const Post = require('./models/post');
 
 const app = express();
+
+// node-angular -> database name
+mongoose.connect(`mongodb+srv://admin:QDGWDwBVOAnk38bB@cluster0-tjm8z.mongodb.net/node-angular?retryWrites=true&w=majority`)
+  .then( () => {
+    console.log('Connected to Database');
+  })
+  .catch(() => {
+    console.log('Connection failed!');
+  });
 
 //parse json data
 app.use(bodyParser.json());
@@ -21,7 +34,13 @@ app.use((req, res, next) => {
 
 //POSTS
 app.post('/api/posts', (req, res, next) => {
-  const post = req.body;
+  // const post = req.body;
+  const post = new Post({
+    title: req.body.title,
+    content: req.body.content
+  });
+  // .save() comes with mongoose package to automatically create right query to database
+  post.save();
   console.log(post);
   res.status(201).json({
     message: 'Post added successfully'
