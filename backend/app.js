@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 //since local host and app are being serverd on different ports
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Header',
+  res.setHeader('Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept'
     );
   res.setHeader('Access-Control-Allow-Methods',
@@ -29,7 +29,7 @@ app.post('/api/posts', (req, res, next) => {
 });
 
 //GETS
-app.use('/api/posts', (req, res, next) => {
+app.get('/api/posts', (req, res, next) => {
   const posts = [
     {
       id: '1',
