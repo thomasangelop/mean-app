@@ -1,6 +1,12 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
+
+//parse json data
+app.use(bodyParser.json());
+//parse urls
+app.use(bodyParser.urlencoded({extended: false}));
 
 //since local host and app are being serverd on different ports
 app.use((req, res, next) => {
@@ -13,6 +19,16 @@ app.use((req, res, next) => {
   next();
 });
 
+//POSTS
+app.post('/api/posts', (req, res, next) => {
+  const post = req.body;
+  console.log(post);
+  res.status(201).json({
+    message: 'Post added successfully'
+  }); //good server always responds
+});
+
+//GETS
 app.use('/api/posts', (req, res, next) => {
   const posts = [
     {
